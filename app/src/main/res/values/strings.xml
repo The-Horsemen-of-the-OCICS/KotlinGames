@@ -3,5 +3,7 @@
 
     <string name="quiz_score">QuizScore</string>
     <string name="sheep_score">SheepScore</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
