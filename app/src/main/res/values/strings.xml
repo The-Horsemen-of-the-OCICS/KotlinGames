@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">KotlinGames</string>
+
+    <string name="quiz_score">QuizScore</string>
+    <string name="sheep_score">SheepScore</string>
+
 </resources>
