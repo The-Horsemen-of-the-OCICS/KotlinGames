@@ -25,9 +25,19 @@ class QuizCardFragment(private val position: Int) : Fragment() {
         mBinding = FragmentQuizCardBinding.inflate(inflater, container, false)
         mBinding.apply { viewmodel = mQuizViewModel }
 
+        mBinding.quizRadioGroup.setOnCheckedChangeListener { radioGroup, i ->
+            val index = mBinding.quizRadioGroup.indexOfChild(mBinding.quizRadioGroup.findViewById(i))
+            mQuizViewModel.selections[position] = index
+        }
+
         initCard()
 
         return mBinding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mBinding.root.requestLayout()
     }
 
     fun initCard() {
@@ -44,6 +54,12 @@ class QuizCardFragment(private val position: Int) : Fragment() {
             newRadioButton.text = c
             mBinding.quizRadioGroup.addView(newRadioButton)
         }
+
+        if (position == mQuizViewModel.cards.size - 1) {
+            mBinding.quizButtonText.text = "Submit"
+        }
+
+
     }
 
 }

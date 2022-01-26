@@ -45,43 +45,84 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="20dp"
+        android:paddingBottom="10dp"
         app:layout_constraintTop_toBottomOf="@id/edit_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/layout_bg"
+        android:backgroundTint="@color/light_blue"
         android:visibility="gone"
         >
 
-        <EditText
-            android:id="@+id/quiz_question_edit_text"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/quiz_question_text_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter Your Question"
-            />
+            app:errorEnabled="true"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
+            app:boxStrokeColor="@color/white"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            app:hintTextColor="@color/white"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/quiz_question_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textVisiblePassword"
+                android:textCursorDrawable="@null"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <LinearLayout
             android:id="@+id/edit_choice_buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/quiz_question_edit_text"
+            app:layout_constraintTop_toBottomOf="@id/quiz_question_text_field"
             >
 
-            <EditText
-                android:id="@+id/quiz_choice_edit_text"
-                android:layout_height="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/quiz_choice_text_field"
                 android:layout_width="0dp"
                 android:layout_weight="5"
+                android:layout_height="wrap_content"
                 android:hint="Enter A Choice"
-                />
+                app:errorEnabled="true"
+                android:layout_marginStart="20dp"
+                app:boxStrokeColor="@color/white"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                app:hintTextColor="@color/white"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/quiz_choice_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textVisiblePassword"
+                    android:textCursorDrawable="@null"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/add_choice_button"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:paddingVertical="15dp"
                 android:text="+"
+                android:textAppearance="@style/BoldContentStyle"
                 app:layout_constraintTop_toBottomOf="@+id/quiz_edit_text"
+                android:backgroundTint="@color/black"
                 />
 
         </LinearLayout>
@@ -94,7 +135,6 @@
             android:layout_height="150dp"
             android:maxHeight="150dp"
             android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="20dp"
             app:layout_constraintTop_toBottomOf="@+id/edit_choice_buttons"
             >
 
@@ -112,7 +152,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Submit"
+            android:layout_marginHorizontal="20dp"
             app:layout_constraintTop_toBottomOf="@+id/edit_scroll_view"
+            android:textAppearance="@style/BoldContentStyle"
+            android:backgroundTint="@color/black"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

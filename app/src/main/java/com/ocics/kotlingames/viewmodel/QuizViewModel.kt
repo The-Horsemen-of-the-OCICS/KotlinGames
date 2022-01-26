@@ -5,7 +5,7 @@ import com.ocics.kotlingames.model.QuizCard
 
 class QuizViewModel: ViewModel() {
     val cards: MutableList<QuizCard> = mutableListOf()
-    val selections: MutableList<Int> = mutableListOf()
+    var selections = arrayListOf(-1, -1, -1, -1, -1)
 
     fun getScore(): Int {
         var score = 0
@@ -17,6 +17,8 @@ class QuizViewModel: ViewModel() {
 
     fun addCard(q: QuizCard) {
         cards.add(q)
+        selections.map { -1 }
+        selections.add(-1)
         shuffleCards()
     }
 
@@ -65,5 +67,6 @@ class QuizViewModel: ViewModel() {
                 0))
 
         cards.shuffle()
+        selections = arrayListOf(-1, -1, -1, -1, -1)
     }
 }

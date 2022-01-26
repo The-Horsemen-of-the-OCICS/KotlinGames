@@ -62,6 +62,7 @@
             >
 
             <TextView
+                android:id="@+id/quiz_button_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/BoldSubtitleStyle"

@@ -3,8 +3,8 @@ package com.ocics.kotlingames
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.EditText
 import android.widget.RadioButton
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.children
 import androidx.core.view.size
@@ -15,7 +15,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.ocics.kotlingames.databinding.ActivityQuizBinding
 import com.ocics.kotlingames.fragment.QuizCardFragment
 import com.ocics.kotlingames.viewmodel.QuizViewModel
-import androidx.viewpager.widget.PagerAdapter
+import com.ocics.kotlingames.fragment.QuizResultFragment
 import com.ocics.kotlingames.model.QuizCard
 
 private const val MIN_SCALE = 0.85f
@@ -42,24 +42,29 @@ class QuizActivity : FragmentActivity() {
         viewPager.setPageTransformer(ZoomOutPageTransformer())
 
         mBinding.addChoiceButton.setOnClickListener {
-            if (mBinding.quizChoiceEditText.text == null || mBinding.quizChoiceEditText.text.isEmpty()) {
-
+            if (mBinding.quizChoiceEditText.text == null || mBinding.quizChoiceEditText.text!!.isEmpty()) {
+                Toast.makeText(this@QuizActivity, "Choice cannot be empty!", Toast.LENGTH_SHORT).show()
             } else {
                 val newRadioButton = layoutInflater.inflate(R.layout.quiz_radio_button, null) as RadioButton
                 newRadioButton.id = View.generateViewId()
                 newRadioButton.text = mBinding.quizChoiceEditText.text
                 mBinding.quizEditRadioGroup.addView(newRadioButton)
+
+                mBinding.quizChoiceEditText.text = null
             }
         }
 
         mBinding.submitQuestionButton.setOnClickListener {
-            if (mBinding.quizChoiceEditText.text == null || mBinding.quizChoiceEditText.text.isEmpty() ||
-                mBinding.quizQuestionEditText.text == null ||  mBinding.quizQuestionEditText.text.isEmpty()) {
+            if (mBinding.quizQuestionEditText.text == null ||  mBinding.quizQuestionEditText.text!!.isEmpty()) {
                 Log.d(TAG, "Edit text is null")
+                Toast.makeText(this@QuizActivity, "Question cannot be empty!", Toast.LENGTH_SHORT).show()
             } else if (mBinding.quizEditRadioGroup.size < 2) {
                 Log.d(TAG, "Insufficient choice")
+                Toast.makeText(this@QuizActivity, "Need at least two or more options!", Toast.LENGTH_SHORT).show()
             } else if (mBinding.quizEditRadioGroup.checkedRadioButtonId == -1) {
-                Log.d(TAG, "Edit text is null")
+                Log.d(TAG, "Choice is null")
+                Toast.makeText(this@QuizActivity, "Need check the correct answer!", Toast.LENGTH_SHORT).show()
+
             } else {
                 var choiceList = arrayListOf<String>()
                 for (r in mBinding.quizEditRadioGroup.children) {
@@ -88,6 +93,13 @@ class QuizActivity : FragmentActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+        actionBar?.hide()
+    }
+
+
     fun addQuestion(v: View) {
         mBinding.quizCardPager.visibility = View.GONE
         mBinding.quizEditView.visibility = View.VISIBLE
@@ -112,17 +124,25 @@ class QuizActivity : FragmentActivity() {
 
     fun nextPager(v: View) {
         val currPos: Int = viewPager.currentItem
-        if ((currPos + 1) != viewPager.adapter?.itemCount) {
+        if (mQuizViewModel.selections[currPos] != -1){
             viewPager.currentItem = currPos + 1
+        } else {
+            Toast.makeText(this@QuizActivity, "No answer checked!", Toast.LENGTH_SHORT).show()
         }
     }
 
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
-        override fun getItemCount(): Int = mQuizViewModel.cards.size
+        override fun getItemCount(): Int = mQuizViewModel.cards.size + 1
 
         override fun createFragment(position: Int): Fragment {
-            val curCard = QuizCardFragment(position)
-            return curCard
+            Log.d(TAG, "createFragment, " + position)
+            if (position < mQuizViewModel.cards.size) {
+                val curQuizCard = QuizCardFragment(position)
+                return curQuizCard
+            } else {
+                val curResultCard = QuizResultFragment()
+                return curResultCard
+            }
         }
     }
 
