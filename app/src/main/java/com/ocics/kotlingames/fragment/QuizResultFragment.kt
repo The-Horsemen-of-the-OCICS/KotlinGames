@@ -2,6 +2,7 @@ package com.ocics.kotlingames.fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import com.ocics.kotlingames.databinding.FragmentQuizResultBinding
 import com.ocics.kotlingames.viewmodel.QuizViewModel
 
 class QuizResultFragment : Fragment() {
+    private val TAG = "QuizResultFragment"
 
     private val mQuizViewModel: QuizViewModel by activityViewModels()
     private lateinit var mBinding: FragmentQuizResultBinding
@@ -39,6 +41,7 @@ class QuizResultFragment : Fragment() {
 
         mBinding.scoreText.text = "Score: " + score.toString()
 
+        // Create result with question, correct answer, and selected answer
         for ((index, card) in mQuizViewModel.cards.withIndex()) {
 
             val newResultCard = layoutInflater.inflate(R.layout.quiz_result_card, null)
@@ -55,6 +58,7 @@ class QuizResultFragment : Fragment() {
             newResultCard.findViewById<TextView>(R.id.result_correct_answer).text = card.choice[card.answer]
             newResultCard.findViewById<TextView>(R.id.result_selection).text = card.choice[mQuizViewModel.selections[index]]
 
+            // Hide views and change background color
             if (card.answer == mQuizViewModel.selections[index]) {
                 newResultCard.setBackgroundResource(R.color.light_green)
                 newResultCard.findViewById<TextView>(R.id.your_answer_text).visibility = View.GONE
@@ -68,10 +72,11 @@ class QuizResultFragment : Fragment() {
     }
 
     private fun saveScore(s: Int) {
-        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        val sharedPref = activity?.getSharedPreferences("saved_scores", Context.MODE_PRIVATE) ?: return
         with(sharedPref.edit()) {
             putLong(getString(R.string.quiz_score), s.toLong())
             apply()
+            Log.d(TAG, "Quiz Score saved: $s")
         }
     }
 }

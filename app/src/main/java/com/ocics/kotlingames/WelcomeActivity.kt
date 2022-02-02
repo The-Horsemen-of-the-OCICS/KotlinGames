@@ -7,19 +7,30 @@ import android.os.Bundle
 import android.view.View
 
 class WelcomeActivity : AppCompatActivity() {
+    lateinit var mediaPlayer: MediaPlayer
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
-        // Play background music
-        val mediaPlayer = MediaPlayer.create(baseContext, R.raw.music)
-        mediaPlayer.start()
+        mediaPlayer = MediaPlayer.create(baseContext, R.raw.music)
+        mediaPlayer.isLooping = true
     }
 
     override fun onResume() {
         super.onResume()
+        // Play background music
+        mediaPlayer.start()
+
+        // Hide system bars
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         actionBar?.hide()
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mediaPlayer.stop()
+    }
+
 
     fun onOkClicked(v: View) {
         val intent = Intent()

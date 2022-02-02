@@ -3,6 +3,7 @@ package com.ocics.kotlingames.fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ import java.text.DecimalFormat
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
 class CountResultFragment : Fragment() {
+    private val TAG = "CountResultFragment"
 
     private lateinit var _binding: FragmentCountResultBinding
     private lateinit var mViewModel: ItemViewModel
@@ -76,10 +78,11 @@ class CountResultFragment : Fragment() {
     }
 
     private fun saveScore(s: Double) {
-        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        val sharedPref = activity?.getSharedPreferences("saved_scores", Context.MODE_PRIVATE) ?: return
         with(sharedPref.edit()) {
-            putLong(getString(R.string.count_score), s.toLong())
+            putFloat(getString(R.string.count_score), s.toFloat())
             apply()
+            Log.d(TAG, "Count Score saved: ${s.toFloat()}")
         }
     }
 }
