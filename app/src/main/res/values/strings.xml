@@ -2,7 +2,7 @@
     <string name="app_name">KotlinGames</string>
 
     <string name="quiz_score">QuizScore</string>
-    <string name="sheep_score">SheepScore</string>
+    <string name="count_score">CountScore</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_count">CountActivity</string>
     <!-- Strings used for fragments for navigation -->

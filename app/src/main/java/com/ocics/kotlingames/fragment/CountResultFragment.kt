@@ -1,5 +1,6 @@
 package com.ocics.kotlingames.fragment
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -71,6 +72,14 @@ class CountResultFragment : Fragment() {
         val form = DecimalFormat("0.00")
         binding.textview.visibility = View.VISIBLE
         binding.textViewScore.text = form.format(score)
-        mViewModel.score = form.format(score).toDouble()
+        saveScore(form.format(score).toDouble())
+    }
+
+    private fun saveScore(s: Double) {
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        with(sharedPref.edit()) {
+            putLong(getString(R.string.count_score), s.toLong())
+            apply()
+        }
     }
 }

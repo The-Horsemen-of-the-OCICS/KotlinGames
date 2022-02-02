@@ -34,7 +34,7 @@ class QuizResultFragment : Fragment() {
     }
     
 
-    fun loadResult() {
+    private fun loadResult() {
         val score = mQuizViewModel.getScore()
 
         mBinding.scoreText.text = "Score: " + score.toString()
@@ -67,7 +67,7 @@ class QuizResultFragment : Fragment() {
         saveScore(score)
     }
 
-    fun saveScore(s: Int) {
+    private fun saveScore(s: Int) {
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
         with(sharedPref.edit()) {
             putLong(getString(R.string.quiz_score), s.toLong())
