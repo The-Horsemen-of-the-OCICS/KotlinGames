@@ -35,9 +35,12 @@ class CountResultFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mViewModel = ViewModelProvider(requireActivity()).get(ItemViewModel::class.java)
+
         binding.buttonOk.setOnClickListener {
             calculate()
         }
+
+        // Back to main activity
         binding.buttonBack.setOnClickListener {
             val intent = Intent()
             intent.setClass(context!!, MainActivity::class.java)
@@ -47,6 +50,7 @@ class CountResultFragment : Fragment() {
         binding.textviewHowMany.text = getString(R.string.how_many_animals, mViewModel.option)
     }
 
+    // Calculate score for counting
     private fun calculate() {
         binding.textviewHowMany.visibility = View.INVISIBLE
         binding.editTextNumber.visibility = View.INVISIBLE

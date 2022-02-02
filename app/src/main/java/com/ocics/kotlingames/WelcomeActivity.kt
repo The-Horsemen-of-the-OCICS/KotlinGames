@@ -1,6 +1,7 @@
 package com.ocics.kotlingames
 
 import android.content.Intent
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -9,7 +10,9 @@ class WelcomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
-
+        // Play background music
+        val mediaPlayer = MediaPlayer.create(baseContext, R.raw.music)
+        mediaPlayer.start()
     }
 
     override fun onResume() {

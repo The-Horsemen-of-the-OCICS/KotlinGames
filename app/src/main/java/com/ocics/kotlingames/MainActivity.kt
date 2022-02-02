@@ -29,8 +29,10 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun launchSheep(v: View) {
-
+    fun launchCount(v: View) {
+        val intent = Intent()
+        intent.setClass(this, CountActivity::class.java)
+        startActivity(intent)
     }
 
     fun launchScore(v: View) {
@@ -38,6 +40,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun exit(v: View) {
-        finish()
+        val intent = Intent()
+        intent.setClass(this, WelcomeActivity::class.java)
+        startActivity(intent)
     }
 }

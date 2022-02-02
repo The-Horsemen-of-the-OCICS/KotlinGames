@@ -10,6 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KotlinGames">
         <activity
+            android:name=".CountActivity"
+            android:exported="false"
+            android:label="@string/title_activity_count"
+            android:theme="@style/Theme.KotlinGames.NoActionBar" />
+        <activity
             android:name=".QuizActivity"
             android:exported="false" />
         <activity
@@ -23,7 +28,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
     </application>
 
 </manifest>

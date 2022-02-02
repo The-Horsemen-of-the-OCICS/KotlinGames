@@ -19,9 +19,12 @@ class CountFragment : Fragment() {
     private lateinit var _binding: FragmentCountBinding
     private lateinit var countDownTimer: CountDownTimer
     private lateinit var mViewModel: ItemViewModel
+    // The actual number of animals
     private var total = 0
     private var timeLeft = 60000
+    // The time(seconds) until images disappear
     private var showTime = 0
+    // The position of the animal image
     private var pos = 0
     private var option = "Sheep"
     private val binding get() = _binding
@@ -42,6 +45,7 @@ class CountFragment : Fragment() {
         }
     }
 
+    // Start showing animal images with a timer
     private fun startCount() {
         if (binding.radioSheep.isChecked) {
             option = "Sheep"
