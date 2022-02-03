@@ -20,6 +20,7 @@ class CountActivity : AppCompatActivity() {
         binding = ActivityCountBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
+        actionBar?.hide()
 
         val navController = findNavController(R.id.nav_host_fragment_content_count)
         appBarConfiguration = AppBarConfiguration(navController.graph)
