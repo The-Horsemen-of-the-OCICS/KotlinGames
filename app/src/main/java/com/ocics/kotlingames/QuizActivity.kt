@@ -42,9 +42,11 @@ class QuizActivity : FragmentActivity() {
         viewPager.setPageTransformer(ZoomOutPageTransformer())
 
         mBinding.addChoiceButton.setOnClickListener {
+            // Handling input errors
             if (mBinding.quizChoiceEditText.text == null || mBinding.quizChoiceEditText.text!!.isEmpty()) {
                 Toast.makeText(this@QuizActivity, "Choice cannot be empty!", Toast.LENGTH_SHORT).show()
             } else {
+                // Create radio button based on inputs
                 val newRadioButton = layoutInflater.inflate(R.layout.quiz_radio_button, null) as RadioButton
                 newRadioButton.id = View.generateViewId()
                 newRadioButton.text = mBinding.quizChoiceEditText.text
@@ -55,6 +57,7 @@ class QuizActivity : FragmentActivity() {
         }
 
         mBinding.submitQuestionButton.setOnClickListener {
+            // Handling input errors
             if (mBinding.quizQuestionEditText.text == null ||  mBinding.quizQuestionEditText.text!!.isEmpty()) {
                 Log.d(TAG, "Edit text is null")
                 Toast.makeText(this@QuizActivity, "Question cannot be empty!", Toast.LENGTH_SHORT).show()
@@ -66,6 +69,7 @@ class QuizActivity : FragmentActivity() {
                 Toast.makeText(this@QuizActivity, "Need check the correct answer!", Toast.LENGTH_SHORT).show()
 
             } else {
+                // Create new quiz card based on inputs
                 var choiceList = arrayListOf<String>()
                 for (r in mBinding.quizEditRadioGroup.children) {
                     choiceList.add((r as RadioButton).text.toString())
@@ -82,14 +86,6 @@ class QuizActivity : FragmentActivity() {
                 mQuizViewModel.shuffleCards()
                 mBinding.quizEditView.visibility = View.GONE
             }
-        }
-    }
-
-    override fun onBackPressed() {
-        if (viewPager.currentItem == 0) {
-            super.onBackPressed()
-        } else {
-            prevPager()
         }
     }
 
@@ -131,6 +127,7 @@ class QuizActivity : FragmentActivity() {
         }
     }
 
+    // Quiz Card transition adapter
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
         override fun getItemCount(): Int = mQuizViewModel.cards.size + 1
 
@@ -146,6 +143,7 @@ class QuizActivity : FragmentActivity() {
         }
     }
 
+    // View pager transformer
     class ZoomOutPageTransformer : ViewPager2.PageTransformer {
 
         override fun transformPage(view: View, position: Float) {

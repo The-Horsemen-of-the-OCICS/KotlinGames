@@ -1,6 +1,8 @@
 package com.ocics.kotlingames
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,6 +13,9 @@ import androidx.activity.viewModels
 class MainActivity : AppCompatActivity() {
 
     private val TAG = "MainActivity"
+
+    private var mQuizScore: Long = 0
+    private var mCountScore: Float = 0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +41,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun launchScore(v: View) {
+        loadScore()
+        val builder = AlertDialog.Builder(this)
+        builder
+            .setTitle("Latest Scores")
+            .setMessage("Quiz Score: $mQuizScore\nCount Score: $mCountScore" )
+            .setPositiveButton("Ok") { dialog, id ->
+                dialog.dismiss()
+            }
+            .show()
+
+    }
+
+    fun loadScore() {
+        val sharedPref = getSharedPreferences("saved_scores", Context.MODE_PRIVATE) ?: return
+        mQuizScore = sharedPref.getLong(getString(R.string.quiz_score), 0)
+        mCountScore = sharedPref.getFloat(getString(R.string.count_score), 0f)
+        Log.d(TAG, "loadScore(), mQuizScore=$mQuizScore, mCountScore=$mCountScore")
 
     }
 
