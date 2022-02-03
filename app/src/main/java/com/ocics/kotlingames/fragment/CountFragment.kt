@@ -2,15 +2,17 @@ package com.ocics.kotlingames.fragment
 
 import android.os.Bundle
 import android.os.CountDownTimer
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.ocics.kotlingames.R
 import com.ocics.kotlingames.databinding.FragmentCountBinding
 import com.ocics.kotlingames.viewmodel.ItemViewModel
+
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -45,6 +47,11 @@ class CountFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+    }
+
     // Start showing animal images with a timer
     private fun startCount() {
         if (binding.radioSheep.isChecked) {
@@ -58,6 +65,7 @@ class CountFragment : Fragment() {
         binding.textviewFirst.visibility = View.INVISIBLE
         binding.radioGroup.visibility = View.INVISIBLE
         binding.timer.visibility = View.VISIBLE
+
 
         updateAnimal()
 
