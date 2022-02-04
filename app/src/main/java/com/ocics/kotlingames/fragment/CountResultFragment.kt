@@ -3,11 +3,13 @@ package com.ocics.kotlingames.fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.ocics.kotlingames.MainActivity
@@ -41,7 +43,11 @@ class CountResultFragment : Fragment() {
         mViewModel = ViewModelProvider(requireActivity()).get(ItemViewModel::class.java)
 
         binding.buttonOk.setOnClickListener {
-            calculate()
+            if (TextUtils.isEmpty(binding.editTextNumber.text.toString())) {
+                Toast.makeText(activity, "Please enter the number ", Toast.LENGTH_SHORT).show()
+            } else {
+                calculate()
+            }
         }
 
         // Back to main activity
