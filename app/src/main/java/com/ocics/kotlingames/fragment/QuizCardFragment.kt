@@ -41,13 +41,16 @@ class QuizCardFragment(private val position: Int) : Fragment() {
     }
 
     fun initCard() {
+        // build a new quiz card
         val card = mQuizViewModel.cards[position]
         mBinding.quizQuestionText.text = "Question ${position+1}: ${card.question}"
 
+        // assign randomized background color
         val rnd = Random()
         val color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
         mBinding.cardBg.setBackgroundColor(color)
 
+        // build quiz choice radio buttons
         for(c in card.choice) {
             val newRadioButton = layoutInflater.inflate(R.layout.quiz_radio_button, null) as RadioButton
             newRadioButton.id = View.generateViewId()
@@ -55,6 +58,7 @@ class QuizCardFragment(private val position: Int) : Fragment() {
             mBinding.quizRadioGroup.addView(newRadioButton)
         }
 
+        // if it is the last question, change button text
         if (position == mQuizViewModel.cards.size - 1) {
             mBinding.quizButtonText.text = "Submit"
         }

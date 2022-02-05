@@ -19,7 +19,7 @@ class WelcomeActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         // Play background music
-        mediaPlayer.start()
+        if (!mediaPlayer.isPlaying) mediaPlayer.start()
 
         // Hide system bars
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
